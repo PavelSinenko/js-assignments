@@ -31,7 +31,8 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-   throw new Error('Not implemented');
+   let re = /{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}/;
+   return re;
 }
 
 
@@ -53,7 +54,8 @@ function getRegexForGuid() {
  *
  */
 function getRegexForPitSpot() {
-   throw new Error('Not implemented');
+   let re = /.*p.{1}t.*/;
+   return re;
 }
 
 
@@ -72,7 +74,15 @@ function getRegexForPitSpot() {
  * @return {RegExp}
  */
 function getRegexForIPv4() {
-   throw new Error('Not implemented');
+   let nol = '0+';                          //0, 00, 000
+   let one_NinetyNine = '0*\d{1,2}';       //0, 00, 000, 1, 01, 001, 99
+   let hunded_One_NinetyNine = '1\d{2}';   //100-199
+   let two_Hundred_FortyNine = '2[0-4]\d'; //200-249
+   let two_Hundred_Fifty_Five = '25[0-5]';  //250-255
+   let part = '(0+|0*\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])';
+
+   let re = /^(0+|0*\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])\.(0+|0*\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])\.(0+|0*\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])\.(0+|0*\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])$/;
+   return re;
 }
 
 
@@ -91,7 +101,11 @@ function getRegexForIPv4() {
  * @return {RegExp}
  */
 function getRegexForSSN() {
-   throw new Error('Not implemented');
+   let first = '(?!000)(?!666)(?!9\d{2})\d{3}'; // (?!000) - not 000, (?!666) - not 666, (?!9\d{2}) - not 900-999
+   let second = '(?!00)\d{2}';                  // not 00
+   let third = '(?!0000)\d{4}';                 // not 0000
+   let re = /^(?!000)(?!666)(?!9\d{2})\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/;
+   return re;
 }
 
 
@@ -116,7 +130,12 @@ function getRegexForSSN() {
  *   'Pa55'.match(validator) => false
  */
 function getPasswordValidator(minLength) {
-   throw new Error('Not implemented');
+   let lowerLetter = '(?=.*[a-z])'; // at least  one lowercase letter
+   let upperLetter = '(?=.*[A-Z])'; // one uppercase letter
+   let nums = '(?=.*\\d)';         // one digit
+   let length = '[a-zA-Z\\d]{' + minLength + ',}'; // only letters and nums and more than minLength
+   let re = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{' + minLength + ',}$');
+   return re;
 }
 
 
